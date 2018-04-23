@@ -52,10 +52,7 @@ elseif(isset($_GET['id'])) {
 	$sql = "SELECT * FROM events WHERE id=".$_GET['id'];
 	$result = mysqli_query($db, $sql);
 
-	echo "Anmeldung zum folgenden Event:";
-
 	echo '<table>';
-
 	echo '<tr><th>Event</th><th>Datum</th><th>Ort</th><th>max. Teilnehmer</th></tr>';
 	while ($row = mysqli_fetch_array($result)) {
 		
@@ -74,6 +71,10 @@ elseif(isset($_GET['id'])) {
 		echo '<td>';
 		echo $row['maxMember'];
 		echo '</td></tr>';
+	
+		echo '<tr><td colspan="4">';
+		echo $row['description'];
+		echo '</td></tr>';
 		
 		$id=$row['id'];
 	}		
@@ -83,8 +84,9 @@ elseif(isset($_GET['id'])) {
 	echo '<br /><br />';
 	
 	
+	echo "<h3>Anmeldung zum Event</h3>";
 	echo '<table>';
-	echo '<tr><th>Vorname</th><th>Nachname</th><th>Begl. Vorname</th><th>Bgl. Nachname</th><th>x</th></tr>';
+	echo '<tr><th>Vorname</th><th>Nachname</th><th>Begl. Vorname</th><th>Bgl. Nachname</th><th> </th></tr>';
 	
 	
 	$sql = "SELECT * FROM participants WHERE eventId=".$_GET['id'];
