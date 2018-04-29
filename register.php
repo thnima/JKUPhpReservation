@@ -1,71 +1,87 @@
-<?
-// Konfiguration einbinden
-include_once "config.inc.php";
+<?php
+	// Konfiguration einbinden
+	include_once "config.inc.php";
 
-// Datenbankverbindung aufbauen
-$db = mysqli_connect(Config::DB_SERVER, Config::DB_USER, Config::DB_PASSWORD, Config::DB_NAME);
-$db->set_charset("utf8");
-
-echo '<link rel="stylesheet" type="text/css" href="style.css">';
-echo '<h3><a href="index.php">Events</a> | <a href="admin.php">Admin</a></h3><br />';
-
-if(isset($_POST['id'])) {
-	echo "Erfolgreich angemeldet!";
-	
-	$sql = "INSERT INTO `participants` (`eventId`, `firstName`, `lastName`, `escortFirstName`, `escortLastName`) VALUES (".$_POST['id'].", '".$_POST['firstName']."', '".$_POST['lastName']."', '".$_POST['escortFirstName']."', '".$_POST['escortLastName']."');";
-	//echo $sql;
-	mysqli_query($db, $sql);
-	
-	die();
-}
+	// Datenbankverbindung aufbauen
+	$db = mysqli_connect(Config::DB_SERVER, Config::DB_USER, Config::DB_PASSWORD, Config::DB_NAME);
+	$db->set_charset("utf8");
 
 
-$sql = "SELECT * FROM events WHERE id=".$_GET['id'];
-$result = mysqli_query($db, $sql);
+	if (isset($_GET['event_id'])) {
+		$eventId = $_GET['event_id'];
+	} 
+	elseif (isset($_POST['id'])) {
+		$eventId = $_POST['id'];
+	}
 
-
-echo '<table><tr>';
-echo '<tr><th>Event</th><th>Datum</th><th>Ort</th><th>max. Teilnehmer</th></tr>';
-while ($row = mysqli_fetch_array($result)) {
-	// DEAKTIVIERTE USER
-	//if($row['extern']==1) {
-	
-	echo '<td>';
-	echo $row['title'];
-	echo '</td>';
-	
-	echo '<td>';
-	echo $row['date'];
-	echo '</td>';
-	
-	echo '<td>';
-	echo $row['location'];
-	echo '</td>';
-	
-	echo '<td>';
-	echo $row['maxMember'];
-	echo '</td>';
-	
-	echo '<tr><td colspan="4">';
-	echo $row['description'];
-	echo '</td></tr>';
-	
-	$id=$row['id'];
-}		
-
-echo '<table><tr>';
-
-echo '<br /><br />';
-
-
-echo "<h3>Anmeldung zum Event</h3>";
-echo '<form action="register.php" method="POST">
-<input type="hidden" name="id" value="'.$id.'" />
-<table><tr><th colspan="2">Teilnehmer</th><th colspan="2">Begleitung (optional ;-)</th></tr>
-<tr><td>Vorname</td><td>Nachname</td><td>Vorname</td><td>Nachname</td></tr>
-<tr><td><input type="text" name="firstName"></td><td><input type="text" name="lastName"></td><td><input type="text" name="escortFirstName"></td><td><input type="text" name="escortLastName"></td></tr>
-<tr><th colspan="4"><input type="submit" value="Anmelden"></th></tr>
-</form>';
-
-	
+	$currentPage = '';
 ?>
+
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <title>Veranstaltungsservice</title>
+  </head>
+  <body>
+  	<?php include('nav.php'); ?>
+
+  	<div class="container mt-5">
+  		<?php include('event.php'); ?>
+
+		<div class="mt-5">
+
+
+		<h5 class="mb-4">Anmeldung zum Event</h5>
+
+  		<form action="register.php?event_id=<?php echo $eventId ?>" method="POST">
+			<input type="hidden" name="id" value=<?php echo $eventId ?> />
+
+			<div class="form-group row">
+				<label for="firstName" class="col-sm-2 col-form-label">Vorname</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="firstName" name="firstName">
+				</div>
+			</div>
+			<div class="form-group row">
+				<label for="lastName" class="col-sm-2 col-form-label">Nachname</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="lastName" name="lastName">
+				</div>
+			</div>
+
+			<h5 class="mb-4 mt-5">Begleitung (optional)</h5>
+			<div class="form-group row">
+				<label for="escortFirstName" class="col-sm-2 col-form-label">Vorname</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="escortFirstName" name="escortFirstName">
+				</div>
+			</div>
+			<div class="form-group row">
+				<label for="escortLastName" class="col-sm-2 col-form-label">Nachname</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="escortLastName" name="escortLastName">
+				</div>
+			</div>
+
+			<?php 
+				if(isset($_POST['id'])) {
+					echo "<div class='mt-3 text-success'>Erfolgreich angemeldet!</div>";
+					
+					$sql = "INSERT INTO `participants` (`eventId`, `firstName`, `lastName`, `escortFirstName`, `escortLastName`) VALUES (".$_POST['id'].", '".$_POST['firstName']."', '".$_POST['lastName']."', '".$_POST['escortFirstName']."', '".$_POST['escortLastName']."');";
+					//echo $sql;
+					mysqli_query($db, $sql);
+				}
+			?>
+
+  			<button type="submit" class="btn btn-primary mt-3">Anmelden</button>
+  		</form>
+		</div>
+  	</div>
+  </body>
+</html>
+
+
+
