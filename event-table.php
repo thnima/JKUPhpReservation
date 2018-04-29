@@ -8,18 +8,17 @@
 			<?php
 				if ($isAdmin) {
 					echo '<th>Max. Teilnehmer</th>';
+					echo '<th>angem. Teilnehmer</th>';
 				}
 			?>
 			<th></th>
 		</tr>
 
   	<?php
-		$sql = "SELECT * FROM events ORDER by date";
+		$sql = "SELECT events.*, (SELECT COUNT(*) FROM participants WHERE events.id = participants.eventId) AS registeredMember FROM events ORDER by date";
 		$result = mysqli_query($db, $sql);
 
 		while ($row = mysqli_fetch_array($result)) {
-			// DEAKTIVIERTE USER
-			//if($row['extern']==1) {
 			
 			echo '<tr><td>';
 			echo $row['title'];
@@ -37,7 +36,11 @@
 				echo '<td>';
 				echo $row['maxMember'];
 				echo '</td>';
-
+				
+				echo '<td>';
+				echo $row['registeredMember'];
+				echo '</td>';
+				
 				echo '<td>';
 				echo '<a href="admin.php?event_id='.$row['id'].'">Infos</a> | ';
 				echo '<a href="edit.php?event_id='.$row['id'].'">Bearbeiten</a> | ';
