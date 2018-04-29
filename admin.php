@@ -32,18 +32,30 @@
   	<div class="container mt-5">
 	  	<?php
 			// Neues Event in DB schreiben.
-			if(isset($_POST['title']) && isset($_POST['date']) && isset($_POST['location'])) {
+			if(isset($_GET['newEvent']) && isset($_POST['title']) && isset($_POST['date']) && isset($_POST['location'])) {
 				$sql = "INSERT INTO `events` (`title`, `description`, `date`, `location`, `maxMember`) VALUES ('".$_POST['title']."', '".$_POST['description']."', '".$_POST['date']."', '".$_POST['location']."', ".$_POST['maxMember'].");";
 				//echo $sql;
 				mysqli_query($db, $sql);
 
 				echo "<div class='text-success mb-3'>Neues Event erfolgreich angelegt!</div>";
 			}
+			
+			// Event-Updaten
+			else if(isset($_GET['editEvent']) && isset($_POST['title']) && isset($_POST['date']) && isset($_POST['location'])) {
+				$sql = "UPDATE `events` SET `title` = '".$_POST['title']."', `description` = '".$_POST['description']."', `date` = '".$_POST['date']."', `location` = '".$_POST['location']."', `maxMember` = '".$_POST['maxMember']."' WHERE id = ".$_POST['id'].";";				
+				
+				//echo $sql;
+				mysqli_query($db, $sql);
+
+				echo "<div class='text-success mb-3'>Event erfolgreich bearbeitet!</div>";
+			}
 
 			if(isset($_GET['event_id'])) {
 
   				include('event.php');
 				
+				
+				echo '<a class="btn btn-primary mt-4 mb-5" href="edit.php?event_id='.$_GET['event_id'].'">Event bearbeiten</a>';
 				
 				echo "<h3 class='mt-5 mb-3'>Anmeldungen zum Event</h3>";
 				

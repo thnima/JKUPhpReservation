@@ -41,7 +41,8 @@
 				echo '<td>';
 				echo '<a href="admin.php?event_id='.$row['id'].'">Infos/Bearbeiten</a>';
 				echo '</td></tr>';
-			} else {
+			}
+			else {
 				echo '<td>';
 				echo '<a href="register.php?event_id='.$row['id'].'">Infos</a>';
 				echo '</td></tr>';
