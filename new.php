@@ -27,25 +27,25 @@
 			<div class="form-group row">
 				<label for="eventTitle" class="col-sm-2 col-form-label">Eventname</label>
 				<div class="col-sm-10">
-					<input type="text" class="form-control" id="eventTitle" placeholder="Eventname" name="title">
+					<input type="text" class="form-control" id="eventTitle" placeholder="Eventname" name="title" required>
 				</div>
 			</div>
 			<div class="form-group row">
 				<label for="eventDate" class="col-sm-2 col-form-label">Datum</label>
 				<div class="col-sm-10">
-					<input type="datetime-local" class="form-control" id="eventDate" name="date">
+					<input type="datetime-local" class="form-control" id="eventDate" name="date" required>
 				</div>
 			</div>
 			<div class="form-group row">
 				<label for="eventLocation" class="col-sm-2 col-form-label">Location</label>
 				<div class="col-sm-10">
-					<input type="text" class="form-control" id="eventLocation" placeholder="Location" name="location">
+					<input type="text" class="form-control" id="eventLocation" placeholder="Location" name="location" required>
 				</div>
 			</div>
 			<div class="form-group row">
 				<label for="eventMaxMember" class="col-sm-2 col-form-label">Max. Teilnehmer</label>
 				<div class="col-sm-10">
-					<input type="text" class="form-control" id="eventMaxMember" placeholder="Maximale Anzahl der Teilnehmer" name="maxMember">
+					<input type="text" class="form-control" id="eventMaxMember" placeholder="Maximale Anzahl der Teilnehmer" name="maxMember" required>
 				</div>
 			</div>
 			<div class="form-group row">

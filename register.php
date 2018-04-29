@@ -42,13 +42,13 @@
 			<div class="form-group row">
 				<label for="firstName" class="col-sm-2 col-form-label">Vorname</label>
 				<div class="col-sm-10">
-					<input type="text" class="form-control" id="firstName" name="firstName">
+					<input type="text" class="form-control" id="firstName" name="firstName" required>
 				</div>
 			</div>
 			<div class="form-group row">
 				<label for="lastName" class="col-sm-2 col-form-label">Nachname</label>
 				<div class="col-sm-10">
-					<input type="text" class="form-control" id="lastName" name="lastName">
+					<input type="text" class="form-control" id="lastName" name="lastName" required>
 				</div>
 			</div>
 

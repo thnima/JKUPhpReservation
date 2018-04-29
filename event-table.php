@@ -39,7 +39,9 @@
 				echo '</td>';
 
 				echo '<td>';
-				echo '<a href="admin.php?event_id='.$row['id'].'">Infos/Bearbeiten</a>';
+				echo '<a href="admin.php?event_id='.$row['id'].'">Infos</a> | ';
+				echo '<a href="edit.php?event_id='.$row['id'].'">Bearbeiten</a> | ';
+				echo '<a href="admin.php?delete_event=1&event_id='.$row['id'].'">Löschen</a>';
 				echo '</td></tr>';
 			}
 			else {

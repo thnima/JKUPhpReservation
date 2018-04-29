@@ -49,6 +49,20 @@
 
 				echo "<div class='text-success mb-3'>Event erfolgreich bearbeitet!</div>";
 			}
+			
+			// Event löschen
+			else if(isset($_GET['delete_event']) && isset($_GET['event_id'])) {
+				$sql = "DELETE FROM `events` WHERE id = ".$_GET['event_id'].";";				
+				
+				//echo $sql;
+				mysqli_query($db, $sql);
+
+				echo "<div class='text-success mb-3'>Event erfolgreich gelöscht!</div>";
+				unset($_GET['event_id']);
+			}
+			
+			
+			
 
 			if(isset($_GET['event_id'])) {
 
@@ -108,7 +122,6 @@
 				echo '';
 			}
 			
-			echo '<br />';
 
 			if(!isset($_GET['event_id'])) {
   				include('event-table.php');
